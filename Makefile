@@ -1,11 +1,11 @@
 # -------- Project path and name default values ------------------------
 # Project path
 # relative to this folder, leave void if the project is in this folder
-#PROJECT_PATH =
+PROJECT_PATH =
 # Project name
-#PROJECT_NAME = app
+PROJECT_NAME = app
 # -------- Project path and name from an external projec.mk file -------
-#-include project.mk
+-include project.mk
 -include ../ciaa_lpc4337_examples/project.mk
 
 # Compose project path and name
