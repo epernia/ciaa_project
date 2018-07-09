@@ -3,7 +3,6 @@
 #include <signal.h>
 
 #include <board.h>
-#include "sapi.h"
 
 #define UNUSED(x) (void)x
 #define SET_ERR(e) (r->_errno = e)
@@ -124,22 +123,6 @@ int _open_r(struct _reent *r, const char *name, int f, int m) {
    return -1;
 }
 
-/*
-_ssize_t _read_r(struct _reent *r, int fd, void *b, size_t n) {
-   size_t i;
-   switch (fd) {
-   case 0:
-   case 1:
-   case 2:
-       for (i = 0; i < n; i++)
-           ((char*) b)[i] = Board_UARTGetChar();
-       return n;
-   default:
-       SET_ERR(ENODEV);
-       return -1;
-   }
-}
-*/
 _ssize_t _read_r(struct _reent *r, int fd, void *b, size_t n) {
   size_t i = 0;
   char c = 0;
