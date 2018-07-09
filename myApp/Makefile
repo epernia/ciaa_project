@@ -1,3 +1,5 @@
+PROJECT_NAME=myproject
+
 # -------- Compile options ---------------------------------------------------
 
 VERBOSE=n
