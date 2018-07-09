@@ -1,23 +1,23 @@
 ifeq ($(USE_FREERTOS),y)
 
-FREERTOS_PATH=$(MODULES_PATH)/freertos
-SRC+=$(FREERTOS_PATH)/MemMang/heap_$(FREERTOS_HEAP_TYPE).c
+FREERTOS_BASE=$(COMMON_PATH)/libs/freertos
+SRC+=$(FREERTOS_BASE)/MemMang/heap_$(FREERTOS_HEAP_TYPE).c
 
-INCLUDES += -I$(FREERTOS_PATH)/include
-INCLUDES += -I$(FREERTOS_PATH)/include/private
+INCLUDES += -I$(FREERTOS_BASE)/include
+INCLUDES += -I$(FREERTOS_BASE)/include/private
 
 DEFINES+=USE_FREERTOS
 DEFINES+=TICK_OVER_RTOS
 
-SRC+=$(wildcard $(FREERTOS_PATH)/source/*.c)
-SRC+=$(wildcard $(FREERTOS_PATH)/source/portable/*.c)
+SRC+=$(wildcard $(FREERTOS_BASE)/source/*.c)
+SRC+=$(wildcard $(FREERTOS_BASE)/source/portable/*.c)
 
 ifeq ($(USE_FPU),y)
-INCLUDES += -I$(FREERTOS_PATH)/source/portable/ARM_CM4F
-SRC+=$(FREERTOS_PATH)/source/portable/ARM_CM4F/port.c
+INCLUDES += -I$(FREERTOS_BASE)/source/portable/ARM_CM4F
+SRC+=$(FREERTOS_BASE)/source/portable/ARM_CM4F/port.c
 else
-INCLUDES += -I$(FREERTOS_PATH)/source/portable/ARM_CM3
-SRC+=$(FREERTOS_PATH)/source/portable/ARM_CM3/port.c
+INCLUDES += -I$(FREERTOS_BASE)/source/portable/ARM_CM3
+SRC+=$(FREERTOS_BASE)/source/portable/ARM_CM3/port.c
 endif
 
 endif

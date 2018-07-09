@@ -1,15 +1,16 @@
+VENDOR_BASE:=$(COMMON_PATH)/libs/vendor_libs/
+
 ifeq ($(USE_LPCOPEN),y)
 
-LPCOPEN_PATH=$(MODULES_PATH)/vendor_libs
 DEFINES+=__USE_LPCOPEN
 
-SRC+=$(wildcard $(LPCOPEN_PATH)/lpc_board_ciaa_edu_4337/src/*.c) 
-INCLUDES+=-I$(LPCOPEN_PATH)/lpc_board_ciaa_edu_4337/inc
+SRC+=$(wildcard $(VENDOR_BASE)/lpc_board_ciaa_edu_4337/src/*.c) 
+INCLUDES+=-I$(VENDOR_BASE)/lpc_board_ciaa_edu_4337/inc
 
-SRC+=$(wildcard $(LPCOPEN_PATH)/lpc_chip_43xx/src/*.c) 
-INCLUDES+=-I$(LPCOPEN_PATH)/lpc_chip_43xx/inc
-INCLUDES+=-I$(LPCOPEN_PATH)/lpc_chip_43xx/inc/usbd_rom
-INCLUDES+=-I$(LPCOPEN_PATH)/lpc_chip_43xx/inc/config_43xx
+SRC+=$(wildcard $(VENDOR_BASE)/lpc_chip_43xx/src/*.c) 
+INCLUDES+=-I$(VENDOR_BASE)/lpc_chip_43xx/inc
+INCLUDES+=-I$(VENDOR_BASE)/lpc_chip_43xx/inc/usbd_rom
+INCLUDES+=-I$(VENDOR_BASE)/lpc_chip_43xx/inc/config_43xx
 
 endif
 
@@ -22,6 +23,6 @@ endif
 
 LDSCRIPT=lpc4337.ld
 
-SRC+=$(wildcard $(LPCOPEN_PATH)/lpc_startup/src/*.c) 
-INCLUDES+=-I$(LPCOPEN_PATH)/lpc_startup/inc
+SRC+=$(wildcard $(VENDOR_BASE)/lpc_startup/src/*.c) 
+INCLUDES+=-I$(VENDOR_BASE)/lpc_startup/inc
 

@@ -1,16 +1,13 @@
 ifeq ($(USE_FATFS_SSP),y)
-ifeq ($(USE_FATFS_USB),y)
-$(error "Error: Only incluede FATFS_SSP or FATFS_USB, not both!")
-endif
-FATFS_PATH=$(MODULES_PATH)/elm-chan-FatFs/fatfs_ssp
+FATFS_BASE=$(COMMON_PATH)/libs/elm-chan-FatFs
 DEFINES+=USE_FATFS_SSP
-INCLUDES += -I$(FATFS_PATH)/inc
-SRC+=$(wildcard $(FATFS_PATH)/src/*.c)
+INCLUDES += -I$(FATFS_BASE)/fatfs_ssp/inc
+SRC+=$(wildcard $(FATFS_BASE)/fatfs_ssp/src/*.c)
 endif
 
 ifeq ($(USE_FATFS_USB),y)
-FATFS_PATH=$(MODULES_PATH)/elm-chan-FatFs/fatfs_usb
+FATFS_BASE=$(COMMON_PATH)/libs/elm-chan-FatFs
 DEFINES+=USE_FATFS_USB
-INCLUDES += -I$(FATFS_PATH)/inc
-SRC+=$(wildcard $(FATFS_PATH)/src/*.c)
+INCLUDES += -I$(FATFS_BASE)/fatfs_usb/inc
+SRC+=$(wildcard $(FATFS_BASE)/fatfs_usb/src/*.c)
 endif
