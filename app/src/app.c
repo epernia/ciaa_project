@@ -13,9 +13,6 @@
 
 /*==================[definiciones de datos internos]=========================*/
 
-DEBUG_PRINT_ENABLE
-CONSOLE_PRINT_ENABLE
-
 /*==================[definiciones de datos externos]=========================*/
 
 /*==================[declaraciones de funciones internas]====================*/
@@ -32,14 +29,6 @@ int main( void )
    // Inicializar y configurar la plataforma
    boardConfig();
 
-   // Inicializar UART_USB como salida Serial de debug
-   debugPrintConfigUart( UART_USB, 115200 );
-   debugPrintlnString( "DEBUG: UART_USB configurada." );
-
-   // Inicializar UART_232 como salida Serial de consola
-   consolePrintConfigUart( UART_232, 115200 );
-   consolePrintlnString( "UART_232 configurada." );
-
    // Crear varias variables del tipo booleano
    bool_t tec1Value = OFF;
    bool_t tec2Value = OFF;
@@ -49,6 +38,7 @@ int main( void )
 
    // ---------- REPETIR POR SIEMPRE --------------------------
    while( TRUE ) {
+      
       /* Si se presiona TEC1, enciende el LEDR */
 
       // Leer pin conectado a la tecla.
@@ -105,17 +95,13 @@ int main( void )
       // Chequear si el valor leido es encedido
       if( ledbValue == ON ) {
          // Si esta encendido mostrar por UART_USB "LEDB encendido."
-         debugPrintlnString( "DEBUG: LEDB encendido." );
-         consolePrintlnString( "LEDB encendido." );
-         consolePrintEnter();
+         printf( "LEDB encendido.\r\n" );
       } else {
          // Si esta apagado mostrar por UART_USB "LEDB apagado."
-         debugPrintlnString( "DEBUG: LEDB apagado." );
-         consolePrintlnString( "LEDB apagado." );
-         consolePrintEnter();
+         printf( "LEDB apagado.\r\n" );
       }
 
-      /* Retardo bloqueante durante 250ms */
+      /* Retardo bloqueante durante 100ms */
 
       delay( 100 );
    }
