@@ -1,6 +1,9 @@
 COMMON_PATH := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+#COMMON_PATH=$(CORE_PATH)
+$(info COMMON_PATH=$(COMMON_PATH))
 
-MODULES=. $(sort $(dir $(wildcard $(COMMON_PATH)/libs/*/)))
+MODULES_PATH=$(COMMON_PATH)/libs
+MODULES=. $(sort $(dir $(wildcard $(MODULES_PATH)/*/)))
 MODULES_MK=$(foreach m, $(MODULES), $(wildcard $(m)/module.mk))
 
 SRC=$(wildcard *.c)
@@ -16,7 +19,7 @@ OUT=out
 OBJECTS=$(CXXSRC:%.cpp=$(OUT)/%.o) $(ASRC:%.s=$(OUT)/%.o) $(SRC:%.c=$(OUT)/%.o)
 DEPS=$(OBJECTS:%.o=%.d)
 
-OOCD_SCRIPT=$(COMMON_PATH)/scripts/openocd.cfg
+OOCD_SCRIPT=$(COMMON_PATH)/openocd/lpc4337_openocd.cfg
 
 TARGET=$(OUT)/$(PROJECT_NAME).elf
 TARGET_BIN=$(basename $(TARGET)).bin
@@ -74,14 +77,20 @@ else
 Q=@
 endif
 
-WITH_SED=$(shell which sed)
-WITH_MEMORY_USAGE=$(shell $(LD) -Wl,--help|grep memory-usage)
-
+#WITH_SED=$(shell which sed)
+#WITH_MEMORY_USAGE=$(shell $(LD) -Wl,--help|grep memory-usage)
 
 ifneq ($(WITH_MEMORY_USAGE),)
 $(info with memory usage)
 LDFLAGS+=-Wl,--print-memory-usage
 endif
+
+OBJECTS_FILTERED=$(OBJECTS)
+OBJ_DIR=$(dir $@)
+OBJ_=$@
+#OBJECTS_FILTERED=$(foreach obj, $(OBJECTS), $(subst $(COMMON_PATH)/,,$(obj)))
+#OBJ_DIR=$(subst $(COMMON_PATH)/,,$(dir $@))
+#OBJ_=$(subst $(COMMON_PATH)/,,$@)
 
 all: $(TARGET) $(TARGET_BIN) $(TARGET_LST) $(TARGET_NM) size
 
@@ -97,46 +106,46 @@ info:
 
 $(OUT)/%.o: %.c
 	@echo CC $(notdir $<)
-	@mkdir -p $(dir $@)
-	$(Q)$(CC) -MMD $(CFLAGS) -c -o $@ $<
+	@mkdir -p $(OBJ_DIR)
+	$(Q)$(CC) -MMD $(CFLAGS) -c -o $(OBJ_) $<
 
 $(OUT)/%.o: %.cpp
 	@echo CXX $(notdir $<)
-	@mkdir -p $(dir $@)
-	$(Q)$(CXX) -MMD $(CXXFLAGS) -c -o $@ $<
+	@mkdir -p $(OBJ_DIR)
+	$(Q)$(CXX) -MMD $(CXXFLAGS) -c -o $(OBJ_) $<
 
 $(OUT)/%.o: %.s
 	@echo AS $(notdir $<)
-	@mkdir -p $(dir $@)
-	$(Q)$(CC) -MMD $(CFLAGS) -c -o $@ $<
+	@mkdir -p $(OBJ_DIR)
+	$(Q)$(CC) -MMD $(CFLAGS) -c -o $(OBJ_) $<
 
 $(TARGET): $(OBJECTS)
 	@echo LD $@...
-	$(Q)$(LD) $(LDFLAGS) -o $@ $(OBJECTS)
+	$(Q)$(LD) $(LDFLAGS) -o $(OBJ_) $(OBJECTS_FILTERED)
 
 $(TARGET_BIN): $(TARGET)
-	$(Q)$(OBJCOPY) -v -O binary $< $@
+	$(Q)$(OBJCOPY) -v -O binary $< $(OBJ_)
 
 $(TARGET_LST): $(TARGET)
 	@echo LIST
-	$(Q)$(LIST) $< > $@
+	$(Q)$(LIST) $< > $(OBJ_)
 
-ifneq ($(WITH_SED),)
-# If you doesn't have sed
-$(info with SED)
+#ifneq ($(WITH_SED),)
+## If you doesn't have sed
+#$(info with SED)
+#$(TARGET_NM): $(TARGET)
+#	@echo NAME
+#	$(Q)$(NM) -nAsSCp $< > $(OBJ_)
+#else
+## If you have sed
+#$(info without SED)
 $(TARGET_NM): $(TARGET)
 	@echo NAME
-	$(Q)$(NM) -nAsSCp $< > $@
-else
-# If you have sed
-$(info without SED)
-$(TARGET_NM): $(TARGET)
-	@echo NAME
-	$(Q)$(NM) -nAsSCp $< \
-		| sed -r 's/(.+?\:[^ ]+) ([a-zA-Z\?] [a-zA-Z_].*)/\1 00000000 \2/' \
-		| sed -r 's/(.+?)\:([a-fA-F0-9]+) ([a-fA-F0-9]+) ([a-zA-Z\?]) (.*)/\1\t0x\2\t0x\3\t\4\t\5/' \
-		> $@
-endif
+#	$(Q)$(NM) -nAsSCp $< \
+#		| sed -r 's/(.+?\:[^ ]+) ([a-zA-Z\?] [a-zA-Z_].*)/\1 00000000 \2/' \
+#		| sed -r 's/(.+?)\:([a-fA-F0-9]+) ([a-fA-F0-9]+) ([a-zA-Z\?]) (.*)/\1\t0x\2\t0x\3\t\4\t\5/' \
+#		> $@
+#endif
 
 size: $(TARGET)
 	$(Q)$(SIZE) $<
