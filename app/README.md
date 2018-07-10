@@ -1,22 +1,5 @@
 # CIAA PROJECT EXAMPLE C APP
 
-## IMPORTANT
-
-**This environment is under construction!!**
-
-**Always use the [released versions](../../releases) because in these all examples are tested and the API documentation is consistent. The master branch may contain inconsistencies because this environment is currently under development.**
-
-## Supported boards
-- Core lpc4337 that includes:
-    - CIAA-NXP (LPC4337).
-    - EDU-CIAA-NXP (LPC4337).
-
-## Supported toolchains
-- gcc-arm-none-eabi
-
-## Available libraries
-- It depends on selected core. See README.md on each folder inside core folder.
-
 ## Using "app" example project
 - Make sure you have an ```arm-none-eabi-*``` toolchain configured in your ```PATH```. If you don't have it, download [GCC ARM Embedded](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm).
 - Inside "app" folder:
@@ -26,7 +9,7 @@
 
 ### Makefile
 
-```
+```makefile
 # -------- Project Name ------------------------------------------------------
 PROJECT_NAME=app
 
