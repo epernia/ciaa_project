@@ -18,4 +18,5 @@ CIAA project Boards ASM, C or C++ project
 
 ## Examples
 - See first [app](/app) example.
-- CIAA-NXP or EDU-CIAA-NXP: https://github.com/epernia/ciaa_lpc4337_examples
+- More examples:
+    - [NXP LPC4337 (CIAA-NXP or EDU-CIAA-NXP)](../ciaa_lpc4337_examples).

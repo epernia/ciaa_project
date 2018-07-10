@@ -51,4 +51,4 @@ include $(CORE_PATH)/core.mk
 - Each project consist in a folder (with a non-spaces name) that includes inside 2 folders, one named ```src``` (here go, .c, .cpp or .s source code files), and another one named ```inc``` (here go, .h or .hpp source header files) and the project's ```Makefle```, where you may configure which libraries you include and compiler options.
 
 ## More Examples
-- CIAA-NXP or EDU-CIAA-NXP: https://github.com/epernia/ciaa_lpc4337_examples
+- [NXP LPC4337 (CIAA-NXP or EDU-CIAA-NXP)](../../ciaa_lpc4337_examples).
