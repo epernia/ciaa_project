@@ -4,22 +4,10 @@
  * Fecha:
  *===========================================================================*/
 
-/*==================[inlcusiones]============================================*/
+// Inlcusiones
 
 #include "app.h"         // <= Su propia cabecera
 #include "sapi.h"        // <= Biblioteca sAPI
-
-/*==================[definiciones y macros]==================================*/
-
-/*==================[definiciones de datos internos]=========================*/
-
-/*==================[definiciones de datos externos]=========================*/
-
-/*==================[declaraciones de funciones internas]====================*/
-
-/*==================[declaraciones de funciones externas]====================*/
-
-/*==================[funcion principal]======================================*/
 
 // FUNCION PRINCIPAL, PUNTO DE ENTRADA AL PROGRAMA LUEGO DE ENCENDIDO O RESET.
 int main( void )
@@ -42,9 +30,8 @@ int main( void )
       
       delay( 100 );
       
-      /* Si pasaron 10 segundos comienza a funcionar el programa
-         copiando lo que toco en BOTON al LED 
-         Mientras espera titila el LED.  */
+      /* Si pasaron 10 segundos comienza a funcionar el programa que copia las
+         acciones en BOTON al LED. Mientras espera titila el LED.  */
       
       timeCount++;      
       
@@ -88,9 +75,3 @@ int main( void )
    // Sistema Operativo, como en el caso de un programa para PC.
    return 0;
 }
-
-/*==================[definiciones de funciones internas]=====================*/
-
-/*==================[definiciones de funciones externas]=====================*/
-
-/*==================[fin del archivo]========================================*/
